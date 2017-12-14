@@ -67,7 +67,9 @@ export default class App extends React.Component {
   createTask(task) {
     this.state.todos.push({
       task,
-      isCompleted: false
+      isCompleted: false,
+      isActive: true
+
     });
     this.setState({todos: this.state.todos});
   }
