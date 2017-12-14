@@ -8,22 +8,26 @@ import Undo from './undo';
 
 const todos = [
   {
+    order: 0,
     task: 'feed the cat',
     isCompleted: false,
     isActive: true
   },
-  {
+  { 
+    order: 2,
     task: 'make my bed',
     isCompleted: true,
     isActive: true
 
   },
   {
+    order: 1,
     task: 'water the garden',
     isCompleted: true,
     isActive: true
   },
   {
+    order: 3,
     task: 'I am Not Active and should be hidden!',
     isCompleted: true,
     isActive: false
@@ -91,12 +95,21 @@ export default class App extends React.Component {
 
   moveUp(taskToMove) {
     const foundTodo = _.find(this.state.todos, todo => todo.task === taskToMove);
-    const foundPriorTodo = _.find(this.state.todos, todo => todo.key === foundTodo.key - 1);
-    if (foundTodo.key === 0) {
+    const foundPriorTodo = _.find(this.state.todos, priorTodo => priorTodo.order === foundTodo.order - 1);
+    if (foundTodo.order === 0) {
       return
-    } 
-    foundTodo.key = foundTodo.key - 1;
-    foundPriorTodo = foundPriorTodo.key + 1;
+     };
+    foundTodo.order = foundTodo.order - 1;
+    foundPriorTodo.order = foundPriorTodo.order + 1;
+    this.setState({ todos: this.state.todos });
+  }
+
+  moveDown(taskToMove) {
+    const foundTodo = _.find(this.state.todos, todo => todo.task === taskToMove);
+    const foundPriorTodo = _.find(this.state.todos, priorTodo => priorTodo.order === foundTodo.order + 1);
+    // if (foundTodo.order === IS LAST IN OBJECT ) { return };
+    foundTodo.order = foundTodo.order + 1;
+    foundPriorTodo.order = foundPriorTodo.order - 1;
     this.setState({ todos: this.state.todos });
   }
   
