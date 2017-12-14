@@ -53,7 +53,10 @@ export default class App extends React.Component {
             todos={this.state.todos} 
             toggleTask={this.toggleTask.bind(this)} 
             saveTask={this.saveTask.bind(this)} 
-            deleteTask={this.toggleDeleteTask.bind(this)} />
+            deleteTask={this.toggleDeleteTask.bind(this)}
+            moveUp={this.moveUp.bind(this)}
+            moveDown={this.moveDown.bind(this)}
+             />
       </div>
     );
   }
@@ -80,15 +83,22 @@ export default class App extends React.Component {
   }
    
   toggleDeleteTask(taskToDelete) {
-    console.log(this.state.todos);
-    console.log(taskToDelete);
     const foundTodo = _.find(this.state.todos, todo => todo.task === taskToDelete);
     foundTodo.isActive = !foundTodo.isActive;
     foundTodo.isCompleted = true;
     this.setState({ todos: this.state.todos });
-    console.log(this.state.todos);
   }
 
+  moveUp(taskToMove) {
+    const foundTodo = _.find(this.state.todos, todo => todo.task === taskToMove);
+    const foundPriorTodo = _.find(this.state.todos, todo => todo.key === foundTodo.key - 1);
+    if (foundTodo.key === 0) {
+      return
+    } 
+    foundTodo.key = foundTodo.key - 1;
+    foundPriorTodo = foundPriorTodo.key + 1;
+    this.setState({ todos: this.state.todos });
+  }
   
 
 }
