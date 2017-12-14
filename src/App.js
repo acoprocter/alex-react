@@ -25,7 +25,7 @@ const todos = [
   },
   {
     task: 'I am Not Active and should be hidden!',
-    isCompleted: false,
+    isCompleted: true,
     isActive: false
   }
 ]
@@ -53,7 +53,7 @@ export default class App extends React.Component {
             todos={this.state.todos} 
             toggleTask={this.toggleTask.bind(this)} 
             saveTask={this.saveTask.bind(this)} 
-            deleteTask={this.deleteTask.bind(this)} />
+            deleteTask={this.toggleDeleteTask.bind(this)} />
       </div>
     );
   }
@@ -79,12 +79,14 @@ export default class App extends React.Component {
     this.setState({ todos: this.state.todos });
   }
    
-  deleteTask(taskToDelete) {
+  toggleDeleteTask(taskToDelete) {
     console.log(this.state.todos);
     console.log(taskToDelete);
     const foundTodo = _.find(this.state.todos, todo => todo.task === taskToDelete);
-    foundTodo.isActive = false;
+    foundTodo.isActive = !foundTodo.isActive;
+    foundTodo.isCompleted = true;
     this.setState({ todos: this.state.todos });
+    console.log(this.state.todos);
   }
 
   

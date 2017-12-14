@@ -7,7 +7,13 @@ export default class TodosList extends React.Component {
     renderItems() {
         const props = _.omit(this.props, 'todos');
         
-        return _.map(this.props.todos.filter(t => t.isActive), (todo, index) => <TodosListItem key={index} {...todo} {...props} />);
+        return _.map(this.props.todos.filter(todo => todo.isActive), (todo, index) => <TodosListItem key={index} {...todo} {...props} />);
+        
+    }
+    renderDeletedItems() {
+        const props = _.omit(this.props, 'todos');
+        
+        return _.map(this.props.todos.filter(todo => todo.isActive === false), (todo, index) => <TodosListItem key={index} {...todo} {...props} />);
         
     }
     render() {
@@ -15,13 +21,24 @@ export default class TodosList extends React.Component {
         marginTop: 15
     };
     return (
-      <table align="center" style={tableStyle}>
+      <div>
+          <table align="center" style={tableStyle}>
           <TodosListHeader />
           <tbody>
               {this.renderItems()}
           </tbody>
       </table>
-      
+      <br/>
+      <br/>
+      <br/>
+      <p>Deleted Tasks</p>
+      <table align="center" style={tableStyle}>
+          <TodosListHeader />
+          <tbody>
+              {this.renderDeletedItems()}
+          </tbody>
+      </table>
+      </div>
     );
   }
 }
