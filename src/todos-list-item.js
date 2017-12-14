@@ -30,29 +30,30 @@ export default class TodosListItem extends React.Component {
             </td>
         );
     }
-    renderEditButton() {
-        const { isActive } = this.props;
-        if (isActive)
-        return (
-            <button onClick={this.onEditClick.bind(this)}>Edit</button>
-         )
-    }
-
+    
     renderActionsSection() {
-        if (this.state.isEditing) {
+        const { isActive } = this.props;
+        if (isActive) {
+            if (this.state.isEditing) {
+                return (
+                    <td>
+                    <button onClick={this.onSaveClick.bind(this)}>Save</button>
+                    <button onClick={this.onCancelClick.bind(this)}>Cancel</button>
+                    </td>
+                );
+            }
             return (
                 <td>
-                <button onClick={this.onSaveClick.bind(this)}>Save</button>
-                <button onClick={this.onCancelClick.bind(this)}>Cancel</button>
+                    <button onClick={this.onEditClick.bind(this)}>Edit</button>
+                    <button onClick={this.props.deleteTask.bind(this, this.props.task)}>Delete</button>
                 </td>
-            );
+                );
         }
         return (
-                  <td>
-                      {this.renderEditButton()}
-                      <button onClick={this.props.deleteTask.bind(this, this.props.task)}>Delete</button>
-                  </td>
-        );
+            <td>
+                <button onClick={this.props.deleteTask.bind(this, this.props.task)}>Delete</button>
+            </td>
+            );
     }
 
     render() {
