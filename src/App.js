@@ -10,27 +10,27 @@ const todos = [
   {
     task: 'feed the cat',
     isCompleted: false,
-    isDeleted: false
+    isActive: true
   },
   {
     task: 'make my bed',
     isCompleted: true,
-    isDeleted: false
+    isActive: true
 
   },
   {
     task: 'water the garden',
     isCompleted: true,
-    isDeleted: false
+    isActive: true
   },
   {
     task: 'I am Deleted and should be hidden!',
     isCompleted: false,
-    isDeleted: true
+    isActive: false
   }
 ]
 
-const prevTodo = []
+const prevTodo = false
 
 export default class App extends React.Component {
   constructor(props) {
@@ -78,13 +78,15 @@ export default class App extends React.Component {
     foundTodo.task = newTask;
     this.setState({ todos: this.state.todos });
   }
-  updatePrevTodo(taskToDelete) {
-    this.setState({ prevTodo: this.state.prevTodo });
-  } 
+   
   deleteTask(taskToDelete) {
-    this.updatePrevTodo(taskToDelete);
-    _.remove(this.state.todos, todo => todo.task === taskToDelete);
-    this.setState({ todos: this.state.todos });
+    this.setState({ prevTodo: taskToDelete });
+    console.log(this.state);
+    console.log(taskToDelete);
+    let newState = Object.assign({}, this.state.todos)
+    _.remove(newState, todo => todo.task === taskToDelete);
+    this.setState({ todos: newState });
+    console.log(this.state);
   }
 
   
