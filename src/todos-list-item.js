@@ -30,7 +30,13 @@ export default class TodosListItem extends React.Component {
             </td>
         );
     }
-
+    renderEditButton() {
+        const { isActive } = this.props;
+        if (isActive)
+        return (
+            <button onClick={this.onEditClick.bind(this)}>Edit</button>
+         )
+    }
 
     renderActionsSection() {
         if (this.state.isEditing) {
@@ -43,7 +49,7 @@ export default class TodosListItem extends React.Component {
         }
         return (
                   <td>
-                      <button onClick={this.onEditClick.bind(this)}>Edit</button>
+                      {this.renderEditButton()}
                       <button onClick={this.props.deleteTask.bind(this, this.props.task)}>Delete</button>
                   </td>
         );
