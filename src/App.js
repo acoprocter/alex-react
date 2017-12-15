@@ -107,7 +107,8 @@ export default class App extends React.Component {
   moveDown(taskToMove) {
     const foundTodo = _.find(this.state.todos, todo => todo.task === taskToMove);
     const foundPostTodo = _.find(this.state.todos, postTodo => postTodo.order === foundTodo.order + 1);
-    // if (foundTodo.order === IS LAST IN OBJECT ) { return };
+    if (!foundPostTodo)
+     { return };
     foundTodo.order = foundTodo.order + 1;
     foundPostTodo.order = foundPostTodo.order - 1;
     this.setState({ todos: this.state.todos });
