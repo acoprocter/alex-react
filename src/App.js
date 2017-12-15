@@ -95,11 +95,10 @@ export default class App extends React.Component {
   reOrder(taskToMove, where) {
     const foundTodo = _.find(this.state.todos, todo => todo.task === taskToMove);
     const moveOverTodo = _.find(this.state.todos, moveOverTodo => moveOverTodo.order === foundTodo.order + where);
-    if (!moveOverTodo)
-     { return };
-    foundTodo.order = foundTodo.order + where;
-    moveOverTodo.order = moveOverTodo.order - where;
+    if (moveOverTodo) {
+      foundTodo.order = foundTodo.order + where;
+      moveOverTodo.order = moveOverTodo.order - where;
+    };
     this.setState({ todos: this.state.todos });
   }
-
 }
