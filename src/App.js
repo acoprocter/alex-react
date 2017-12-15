@@ -58,8 +58,7 @@ export default class App extends React.Component {
             toggleTask={this.toggleTask.bind(this)} 
             saveTask={this.saveTask.bind(this)} 
             deleteTask={this.toggleDeleteTask.bind(this)}
-            moveUp={this.moveUp.bind(this)}
-            moveDown={this.moveDown.bind(this)}
+            reOrder={this.reOrder.bind(this)}
              />
       </div>
     );
@@ -93,26 +92,14 @@ export default class App extends React.Component {
     this.setState({ todos: this.state.todos });
   }
 
-  moveUp(taskToMove) {
+  reOrder(taskToMove, where) {
     const foundTodo = _.find(this.state.todos, todo => todo.task === taskToMove);
-    const foundPriorTodo = _.find(this.state.todos, priorTodo => priorTodo.order === foundTodo.order - 1);
-    if (foundTodo.order === 0) {
-      return
-     };
-    foundTodo.order = foundTodo.order - 1;
-    foundPriorTodo.order = foundPriorTodo.order + 1;
-    this.setState({ todos: this.state.todos });
-  }
-
-  moveDown(taskToMove) {
-    const foundTodo = _.find(this.state.todos, todo => todo.task === taskToMove);
-    const foundPostTodo = _.find(this.state.todos, postTodo => postTodo.order === foundTodo.order + 1);
-    if (!foundPostTodo)
+    const moveOverTodo = _.find(this.state.todos, moveOverTodo => moveOverTodo.order === foundTodo.order + where);
+    if (!moveOverTodo)
      { return };
-    foundTodo.order = foundTodo.order + 1;
-    foundPostTodo.order = foundPostTodo.order - 1;
+    foundTodo.order = foundTodo.order + where;
+    moveOverTodo.order = moveOverTodo.order - where;
     this.setState({ todos: this.state.todos });
   }
-  
 
 }
