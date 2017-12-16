@@ -34,14 +34,14 @@ const todos = [
   }
 ]
 
-const prevTodo = false
+let prevState = false
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       todos, 
-      prevTodo
+      prevState
     }
   }
   render() {
@@ -51,7 +51,7 @@ export default class App extends React.Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Todo List</h1>
         </header>
-        <Undo prevTodo={this.state.prevTodo} onClick={this.createTask.bind(prevTodo.task)} />
+        <Undo prevState={this.state.prevState} undo={this.undo.bind(this)} />
         <CreateTodo todos={this.state.todos} createTask={this.createTask.bind(this)} suggestions={this.state.suggestions} />
         <TodosList 
             todos={this.state.todos} 
@@ -93,12 +93,20 @@ export default class App extends React.Component {
   }
 
   reOrder(taskToMove, where) {
+    let prevState = _.clone(this.state.todos);
+    console.log(prevState);
     const foundTodo = _.find(this.state.todos, todo => todo.task === taskToMove);
     const moveOverTodo = _.find(this.state.todos, moveOverTodo => moveOverTodo.order === foundTodo.order + where);
     if (moveOverTodo) {
       foundTodo.order = foundTodo.order + where;
       moveOverTodo.order = moveOverTodo.order - where;
     };
-    this.setState({ todos: this.state.todos });
+    // console.log(prevState);
+    console.log(this.state.todos);
+    this.setState({ todos: this.state.todos, prevState: prevState });
+  }
+
+  undo() {
+    this.setState({ todos: this.state.prevState });
   }
 }

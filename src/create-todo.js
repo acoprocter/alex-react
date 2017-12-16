@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-
+import dropdown from 'react-bootstrap/lib/Dropdown';
 
 export default class CreateTodo extends React.Component {
     constructor(props) {
@@ -26,8 +26,15 @@ export default class CreateTodo extends React.Component {
     };
     return (
       <div>
-      <form style={createStyle} onSubmit={this.handleCreate.bind(this)}>
-          <input type="text" placeholder="What do I need to do?" ref="createInput" onSelect={this.renderSuggestions()} />
+      <form className="dropdown" style={createStyle} onSubmit={this.handleCreate.bind(this)}>
+          <input className="dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="text" placeholder="What do I need to do?" ref="createInput" onSelect={this.renderSuggestions()} />
+            <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <button className="dropdown-item" type="button">Action</button>
+                <button className="dropdown-item" type="button">Another action</button>
+                <button className="dropdown-item" type="button">Something else here</button>
+            </div>
+        
+
           <button>Create</button>
           {this.renderError()}
       </form>

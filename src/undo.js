@@ -2,8 +2,8 @@ import React from 'react';
 
 export default class Undo extends React.Component{
     render() {
-        if (!this.props.prevTodo) { return null; }
+        if (!this.props.prevState) { return null; }
        
-        return <button onClick={this.props.onClick} >Undo</button>
+        return <button onClick={this.props.undo.bind(this)} >Undo</button>
     }
 }
